@@ -2,9 +2,9 @@ name: .net build & test
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   workflow_call:
 
 jobs:
@@ -19,10 +19,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./TestServer/TestServer.sln
     - name: Build TestServer
-      run: dotnet build --no-restore TestServer
+      run: dotnet build --no-restore ./TestServer/TestServer.sln
     - name: Build TestServerTests
-      run: dotnet build --no-restore TestServerTests
+      run: dotnet build --no-restore ./TestServerTests/TestServerTests.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal ./TestServerTests/TestServerTests.csproj
